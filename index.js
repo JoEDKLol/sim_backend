@@ -6,7 +6,8 @@ dotenv.config()
 
 const cors = require("cors")
 let corspolicy = {
-    origin:'http://localhost:3000'
+    // origin:'http://localhost:3000'
+    origin:process.env.FRONTEND_URL
 }
 
 const userRouter = require('./routes/userRoute')

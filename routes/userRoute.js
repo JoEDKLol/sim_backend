@@ -72,6 +72,9 @@ userRoute.post("/login", getFields.none(), async (request, response) => {
                         loginYn:"y",
                         massage:"login success",
                         loginId:userData._id,
+                        userName:userData.userName,
+                        role:userData.role,
+                        email:userData.email,
                         jwt:{
                             // accessToken:token.access(userData._id),
                             // refreshToken:token.refresh(userData._id)
@@ -122,9 +125,10 @@ userRoute.post("/signup", getFields.none(), async (request, response) => {
 });
 
 userRoute.post("/fpChackEmail", getFields.none(), async (request, response) => {
-    
+
     try{
         let userData = await Users.findOne({email:request.body.email});
+
         if(userData){
             response.send({
                 user_id:userData._id,
