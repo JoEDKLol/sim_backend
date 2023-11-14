@@ -1,0 +1,37 @@
+const mongoose = require('mongoose')
+
+const UserPwdChgReqSchema = mongoose.Schema({
+    user_id : {
+        type: mongoose.Schema.ObjectId,
+        required: true,
+        index:{unique:true}
+    },
+    email_number : {
+        type: Number,
+        required: true
+    },
+    delete_yn : {
+        type: String,
+        default: "n"
+    },
+    regDate : {
+        type: Date,
+        default: new Date()
+    },
+    regUser : {
+        type: String,
+        required: true
+    },
+    updDate : {
+        type: Date,
+        default: new Date()
+    },
+    updUser : {
+        type: String,
+        required: true
+    }
+
+})
+
+const UserPwdChgReq=mongoose.model('user_pwd_chg_req',UserPwdChgReqSchema)
+module.exports=UserPwdChgReq
