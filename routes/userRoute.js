@@ -10,28 +10,29 @@ const Users = require("../models/userSchemas");
 const UserPwdChgReq = require("../models/userPwdChgReqSchemas");
 const ObjectId = require("mongoose").Types.ObjectId;
 
-userRoute.get("/user", async (request, response) => {
-    const userDate = await Users.find({});
-    try {
-        response.send(userDate);
-    } catch (error) {
-        response.status(500).send(error);
-    }
-});
+// userRoute.get("/user", async (request, response) => {
+//     const userDate = await Users.find({});
+//     try {
+//         response.send(userDate);
+//     } catch (error) {
+//         response.status(500).send(error);
+//     }
+// });
 
-userRoute.get("/user/:_id", async (request, response) => {
-    try {
-        const userDate = await Users.findById({_id:request.params._id});
+// userRoute.get("/user/:_id", async (request, response) => {
+//     try {
+//         const userDate = await Users.findById({_id:request.params._id});
     
-        response.send(userDate);
-    } catch (error) {
-        response.status(500).send(error);
-    }
-});
+//         response.send(userDate);
+//     } catch (error) {
+//         response.status(500).send(error);
+//     }
+// });
 
 userRoute.post("/login", getFields.none(), async (request, response) => {
     try {
         // let userData = await Users.findOne({email:request.body.email,password:request.body.password});
+        
         let userData = await Users.findOne({email:request.body.email});
         if(!userData){
             return response.send({
@@ -53,6 +54,10 @@ userRoute.post("/login", getFields.none(), async (request, response) => {
                 }else{
                     let upRes = await Users.updateOne({_id:userData._id}
                         ,{"loginAttemptsCnt":userData.loginAttemptsCnt+1})
+                    response.send({
+                        loginYn:"n", 
+                        massage:""
+                    });
                 }
             }else{
                 if(userData.loginAttemptsCnt >= 10){
@@ -66,8 +71,48 @@ userRoute.post("/login", getFields.none(), async (request, response) => {
                             ,{"loginAttemptsCnt":0})
                     }
 
-                    let id = userData._id;
-                    
+                    // let id = userData._id;
+                    // response.setHeader({
+                    //     jwt:{
+                    //         // accessToken:token.access(userData._id),
+                    //         // refreshToken:token.refresh(userData._id)
+                            
+                    //         accessToken:jwt.sign({
+                    //             id:userData._id,
+                    //             email:userData.email,
+
+                    //         },process.env.ACCESS_TOKEN_SECRET,{
+                    //             expiresIn:"15m",
+                    //             issuer:"sim_master"
+                    //         }),
+                    //         refreshToken:jwt.sign({
+                    //             id:userData._id,
+                    //             email:userData.email,
+                    //         },process.env.REFRESH_TOKEN_SECRET,{
+                    //             expiresIn:"30 days",
+                    //             issuer:"sim_master"
+                    //         })
+                    //     }
+                    // });
+                    response.setHeader("accesstoken", 
+                        jwt.sign({
+                            id:userData._id,
+                            email:userData.email,
+
+                        },process.env.ACCESS_TOKEN_SECRET,{
+                            expiresIn:"15m",
+                            // issuer:"sim_master"
+                        })
+                    );
+                    response.setHeader("refreshtoken",
+                        jwt.sign({
+                            id:userData._id,
+                            email:userData.email,
+                        },process.env.REFRESH_TOKEN_SECRET,{
+                            expiresIn:"30 days",
+                            // issuer:"sim_master"
+                        })
+                    );
                     response.send({
                         loginYn:"y",
                         massage:"login success",
@@ -75,18 +120,10 @@ userRoute.post("/login", getFields.none(), async (request, response) => {
                         userName:userData.userName,
                         role:userData.role,
                         email:userData.email,
-                        jwt:{
-                            // accessToken:token.access(userData._id),
-                            // refreshToken:token.refresh(userData._id)
-                            
-                            accessToken:jwt.sign({id},process.env.ACCESS_TOKEN_SECRET,{
-                                expiresIn:"15m",
-                            }),
-                            refreshToken:jwt.sign({id},process.env.REFRESH_TOKEN_SECRET,{
-                                expiresIn:"30 days",
-                            })
-                        }
+                        
                     })
+
+                    // console.log(response.getHeader("accessToken"));
 
                     // response.send(userData);
 
@@ -231,6 +268,17 @@ userRoute.post("/updatePassword", getFields.none(), async (request, response) =>
     catch
     {
 
+    }
+});
+
+userRoute.post("/test", getFields.none(), async (request, response) => {
+    try {
+        
+        // console.log(request);
+
+        response.send(200);
+    } catch (error) {
+        response.status(500).send(error);
     }
 });
 

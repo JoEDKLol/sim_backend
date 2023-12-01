@@ -6,7 +6,7 @@ let getFields=multer()
 const operatorUserRoute=express.Router()
 const OperatorUser = require("../models/operatorUserSchemas");
 
-operatorUserRoute.get("/", async (request, response) => {
+operatorUserRoute.get("/operatoruser", async (request, response) => {
     const operatorUserDate = await OperatorUser.find({});
     try {
       response.send(operatorUserDate);
@@ -15,7 +15,7 @@ operatorUserRoute.get("/", async (request, response) => {
     }
 });
 
-operatorUserRoute.get("/:company_id", async (request, response) => {
+operatorUserRoute.get("/operatoruser/:company_id", async (request, response) => {
   const operatorUserDate = await OperatorUser.findOne({company_id:new ObjectId(request.params.company_id)});
   try {
     response.send(operatorUserDate);
