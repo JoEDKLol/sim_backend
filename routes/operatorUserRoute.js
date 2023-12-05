@@ -2,7 +2,6 @@ const express=require('express')
 const ObjectId = require("mongoose").Types.ObjectId;
 const multer=require('multer')
 let getFields=multer()
-
 const operatorUserRoute=express.Router()
 const OperatorUser = require("../models/operatorUserSchemas");
 
@@ -16,8 +15,9 @@ operatorUserRoute.get("/operatoruser", async (request, response) => {
 });
 
 operatorUserRoute.get("/operatoruser/:company_id", async (request, response) => {
-  const operatorUserDate = await OperatorUser.findOne({company_id:new ObjectId(request.params.company_id)});
+  const operatorUserDate = await OperatorUser.find({company_id:new ObjectId(request.params.company_id)});
   try {
+    // console.log(operatorUserDate);
     response.send(operatorUserDate);
   } catch (error) {
     response.status(500).send(error);

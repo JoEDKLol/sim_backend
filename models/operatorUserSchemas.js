@@ -19,6 +19,10 @@ const OperatorUserSchema = mongoose.Schema({
             required: true
         }
     },
+    delete_yn : {
+        type: String,
+        default: "n"
+    },
     regDate : {
         type: Date,
         default: new Date()

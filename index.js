@@ -13,6 +13,7 @@ let corspolicy = {
 const userRouter = require('./routes/userRoute')
 const operatorUserRoute = require('./routes/operatorUserRoute');
 const authUserRoute = require('./routes/authUserRoute');
+const companyRoute = require('./routes/companyRoute');
 // const cookieParser = require('cookie-parser')
 // const verifyToken = require('./common/jwtCheck')
 
@@ -129,6 +130,7 @@ app.use('/',userRouter)
 app.use('/auth',verifyToken);
 app.use('/auth',operatorUserRoute)
 app.use('/auth',authUserRoute)
+app.use('/auth',companyRoute)
 
 app.listen(process.env.PORT,()=>{
     console.log(`Example app listening at http://localhost:${process.env.PORT}`)
