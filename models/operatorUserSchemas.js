@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const OperatorUserSchema = mongoose.Schema({
     company_id : {
         type: mongoose.Schema.ObjectId,
-        required: true
+        required: true,
+        index:{unique:true}
     },
     user : {
         user_id:{

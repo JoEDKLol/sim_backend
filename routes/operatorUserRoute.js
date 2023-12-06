@@ -4,6 +4,7 @@ const multer=require('multer')
 let getFields=multer()
 const operatorUserRoute=express.Router()
 const OperatorUser = require("../models/operatorUserSchemas");
+const Users = require("../models/userSchemas");
 
 operatorUserRoute.get("/operatoruser", async (request, response) => {
     const operatorUserDate = await OperatorUser.find({});
@@ -21,6 +22,20 @@ operatorUserRoute.get("/operatoruser/:company_id", async (request, response) => 
     response.send(operatorUserDate);
   } catch (error) {
     response.status(500).send(error);
+  }
+});
+operatorUserRoute.post("/regoperatoruser", getFields.none(), async (request, response) => {
+  let userData = await Users.findOne({email:request.body.email});
+  if(!userData){
+      return response.send({
+          "massage":"no users"
+      });
+  }else{
+
+    return response.send({
+        "massage":"users"
+    });
+
   }
 });
 
