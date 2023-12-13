@@ -9,7 +9,8 @@ const OperatorUserSchema = mongoose.Schema({
     user : {
         user_id:{
             type: mongoose.Schema.ObjectId,
-            required: true
+            required: true,
+            index:{unique:true}
         },
         user_name:{
             type: String,

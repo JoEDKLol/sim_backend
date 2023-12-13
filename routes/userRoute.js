@@ -138,8 +138,8 @@ userRoute.post("/login", getFields.none(), async (request, response) => {
 
 userRoute.post("/signup", getFields.none(), async (request, response) => {
     
-    request.body.regUser = request.body.userName;
-    request.body.updUser = request.body.userName;
+    request.body.regUser = request.body.email;
+    request.body.updUser = request.body.email;
     
     const newuser=new Users(request.body)
     try {
