@@ -27,7 +27,7 @@ const CompanySchema = mongoose.Schema({
     },
     regDate : {
         type: Date,
-        default: new Date()
+        default: Date.now
     },
     regUser : {
         type: String,
@@ -35,7 +35,7 @@ const CompanySchema = mongoose.Schema({
     },
     updDate : {
         type: Date,
-        default: new Date()
+        default: Date.now
     },
     updUser : {
         type: String,

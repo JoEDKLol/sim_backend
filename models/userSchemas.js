@@ -43,7 +43,7 @@ const UserSchema = mongoose.Schema({
     },
     regDate : {
         type: Date,
-        default: new Date()
+        default: Date.now
     },
     regUser : {
         type: String,
@@ -51,7 +51,7 @@ const UserSchema = mongoose.Schema({
     },
     updDate : {
         type: Date,
-        default: new Date()
+        default: Date.now
     },
     updUser : {
         type: String,

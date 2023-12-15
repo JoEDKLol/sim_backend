@@ -6,12 +6,12 @@ const OperatorUserSchema = mongoose.Schema({
         required: true,
         index:{unique:true}
     },
-    user : {
-        user_id:{
-            type: mongoose.Schema.ObjectId,
-            required: true,
-            index:{unique:true}
-        },
+    user_id:{
+        type: mongoose.Schema.ObjectId,
+        required: true,
+        index:{unique:true}
+    },
+    user : {  
         user_name:{
             type: String,
             required: true
@@ -27,7 +27,7 @@ const OperatorUserSchema = mongoose.Schema({
     },
     regDate : {
         type: Date,
-        default: new Date()
+        default: Date.now
     },
     regUser : {
         type: String,
@@ -35,7 +35,7 @@ const OperatorUserSchema = mongoose.Schema({
     },
     updDate : {
         type: Date,
-        default: new Date()
+        default: Date.now
     },
     updUser : {
         type: String,
