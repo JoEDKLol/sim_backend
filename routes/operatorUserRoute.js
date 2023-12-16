@@ -15,28 +15,26 @@ operatorUserRoute.get("/operatoruser", async (request, response) => {
     }
 });
 
-operatorUserRoute.get("/operatoruser/:company_id", async (request, response) => {
+operatorUserRoute.get("/operatoruser/:company_id/:currentPage/:pageListCnt", async (request, response) => {
   
-  const currentPage = 1;
-  const maxPage = 9;
-  const skipPage = maxPage*(currentPage-1);
+  const currentPage = parseInt(request.params.currentPage);
+  const pageListCnt = parseInt(request.params.pageListCnt);
+  const skipPage = pageListCnt*(currentPage-1);
   
   const totOperatorUserCnt = await OperatorUser.countDocuments({company_id:new ObjectId(request.params.company_id),delete_yn:"n"});
   const operatorUserDate = await OperatorUser
   .find({company_id:new ObjectId(request.params.company_id), delete_yn:"n"})
   .sort({updDate:-1})
   .skip(skipPage)
-  .limit(maxPage);
-
-  // console.log(totOperatorUserCnt);
-
+  .limit(pageListCnt);
 
   try {
-    // console.log(operatorUserDate);
-    
     let sendData = {
       list:operatorUserDate,
-      totCnt:totOperatorUserCnt
+      totCnt:totOperatorUserCnt,
+      currentPage:currentPage,
+      pageListCnt:pageListCnt,
+
     }
     // console.log(sendData);
     response.send(sendData);
