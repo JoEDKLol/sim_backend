@@ -108,6 +108,9 @@ operatorUserRoute.post("/regoperatoruser", getFields.none(), async (request, res
                   delete_yn:"n"
                 }
               }
+              , updDate:date
+              , updUser:request.body.email
+
             }
           )
           
@@ -122,10 +125,39 @@ operatorUserRoute.post("/regoperatoruser", getFields.none(), async (request, res
     }
 
   }catch (error) {
-    console.log(error);
     response.status(500).send(error);
   }
     
-});
+  });
+
+  operatorUserRoute.post("/deloperatoruser", getFields.none(), async (request, response) => {
+
+    try{
+      let delOperatorUserData = await OperatorUser.findByIdAndDelete(request.body.id);
+      let date = new Date().toISOString();
+      let upUser = await Users.updateOne(
+        {email:request.body.email},
+        {  
+          $pull: { 
+            //{company_id:"", company_name:"", regDate:"", delete_yn:""}
+            "companies_operator": {
+              "company_id":request.body.company_id,
+            }
+          }
+          , updDate:date
+          , updUser:request.body.updUser
+        }
+      )
+
+      return response.send({  
+        "massage":"",
+        "success":"y"
+      });
+      
+    }catch (error) {
+      response.status(500).send(error);
+    }
+
+  });
 
 module.exports=operatorUserRoute
