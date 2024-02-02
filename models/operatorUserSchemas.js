@@ -4,12 +4,12 @@ const OperatorUserSchema = mongoose.Schema({
     company_id : {
         type: mongoose.Schema.ObjectId,
         required: true,
-        index:{unique:true}
+        index:{unique:false}
     },
     user_id:{
         type: mongoose.Schema.ObjectId,
         required: true,
-        index:{unique:true}
+        index:{unique:false}
     },
     user : {  
         user_name:{

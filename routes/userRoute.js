@@ -71,29 +71,6 @@ userRoute.post("/login", getFields.none(), async (request, response) => {
                             ,{"loginAttemptsCnt":0})
                     }
 
-                    // let id = userData._id;
-                    // response.setHeader({
-                    //     jwt:{
-                    //         // accessToken:token.access(userData._id),
-                    //         // refreshToken:token.refresh(userData._id)
-                            
-                    //         accessToken:jwt.sign({
-                    //             id:userData._id,
-                    //             email:userData.email,
-
-                    //         },process.env.ACCESS_TOKEN_SECRET,{
-                    //             expiresIn:"15m",
-                    //             issuer:"sim_master"
-                    //         }),
-                    //         refreshToken:jwt.sign({
-                    //             id:userData._id,
-                    //             email:userData.email,
-                    //         },process.env.REFRESH_TOKEN_SECRET,{
-                    //             expiresIn:"30 days",
-                    //             issuer:"sim_master"
-                    //         })
-                    //     }
-                    // });
                     response.setHeader("accesstoken", 
                         jwt.sign({
                             id:userData._id,
@@ -122,11 +99,6 @@ userRoute.post("/login", getFields.none(), async (request, response) => {
                         email:userData.email,
                         
                     })
-
-                    // console.log(response.getHeader("accessToken"));
-
-                    // response.send(userData);
-
                 }
             }            
         }

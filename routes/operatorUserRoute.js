@@ -102,7 +102,7 @@ operatorUserRoute.post("/regoperatoruser", getFields.none(), async (request, res
               $addToSet: { 
                 //{company_id:"", company_name:"", regDate:"", delete_yn:""}
                 companies_operator: {
-                  company_id:request.body.company_id,
+                  company_id:new ObjectId(request.body.company_id),
                   company_name:request.body.company_name,
                   regDate:date,
                   delete_yn:"n"
@@ -125,6 +125,7 @@ operatorUserRoute.post("/regoperatoruser", getFields.none(), async (request, res
     }
 
   }catch (error) {
+    console.log(error);
     response.status(500).send(error);
   }
     
@@ -141,7 +142,7 @@ operatorUserRoute.post("/regoperatoruser", getFields.none(), async (request, res
           $pull: { 
             //{company_id:"", company_name:"", regDate:"", delete_yn:""}
             "companies_operator": {
-              "company_id":request.body.company_id,
+              "company_id":new ObjectId(request.body.company_id),
             }
           }
           , updDate:date
