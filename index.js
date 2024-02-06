@@ -14,6 +14,7 @@ const userRouter = require('./routes/userRoute')
 const operatorUserRoute = require('./routes/operatorUserRoute');
 const authUserRoute = require('./routes/authUserRoute');
 const companyRoute = require('./routes/companyRoute');
+const inventoryRoute = require('./routes/inventoryRoute');
 // const cookieParser = require('cookie-parser')
 // const verifyToken = require('./common/jwtCheck')
 
@@ -131,6 +132,7 @@ app.use('/auth',verifyToken);
 app.use('/auth',operatorUserRoute)
 app.use('/auth',authUserRoute)
 app.use('/auth',companyRoute)
+app.use('/auth',inventoryRoute)
 
 app.listen(process.env.PORT,()=>{
     console.log(`Example app listening at http://localhost:${process.env.PORT}`)
